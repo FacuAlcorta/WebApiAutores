@@ -11,8 +11,8 @@ using WebApiAutoresDb;
 namespace WebApiAutores.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230129002454_Initial")]
-    partial class Initial
+    [Migration("20230129003730_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
