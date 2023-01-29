@@ -11,7 +11,7 @@ using WebApiAutoresDb;
 namespace WebApiAutores.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230128191555_Initial")]
+    [Migration("20230129002454_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -26,8 +26,11 @@ namespace WebApiAutores.Migrations
 
             modelBuilder.Entity("WebApiAutores.Entidades.Autor", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
