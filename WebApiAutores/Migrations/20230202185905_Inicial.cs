@@ -16,11 +16,24 @@ namespace WebApiAutores.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Autores", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Libros",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Titulo = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Libros", x => x.Id);
                 });
         }
 
@@ -29,6 +42,9 @@ namespace WebApiAutores.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Autores");
+
+            migrationBuilder.DropTable(
+                name: "Libros");
         }
     }
 }

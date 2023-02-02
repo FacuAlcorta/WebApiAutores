@@ -16,7 +16,7 @@ namespace WebApiAutores.Controllers
             this.context = context;
         }
 
-        [HttpGet("{id:int}")]
+        /*[HttpGet("{id:int}")]
         public async Task<ActionResult<Libro>> Get(int id)
         {
             return await context.Libros.Include(x => x.Autor).FirstOrDefaultAsync(x => x.Id == id);
@@ -35,6 +35,6 @@ namespace WebApiAutores.Controllers
             context.Add(libro);
             await context.SaveChangesAsync();
             return Ok();
-        }
+        }*/
     }
 }
