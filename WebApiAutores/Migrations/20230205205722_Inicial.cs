@@ -5,7 +5,7 @@
 namespace WebApiAutores.Migrations
 {
     /// <inheritdoc />
-    public partial class InicialLibroComentarios : Migration
+    public partial class Inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,7 @@ namespace WebApiAutores.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,6 +34,31 @@ namespace WebApiAutores.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Libros", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AutoresLibros",
+                columns: table => new
+                {
+                    LibroId = table.Column<int>(type: "int", nullable: false),
+                    AutorId = table.Column<int>(type: "int", nullable: false),
+                    Orden = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AutoresLibros", x => new { x.AutorId, x.LibroId });
+                    table.ForeignKey(
+                        name: "FK_AutoresLibros_Autores_AutorId",
+                        column: x => x.AutorId,
+                        principalTable: "Autores",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AutoresLibros_Libros_LibroId",
+                        column: x => x.LibroId,
+                        principalTable: "Libros",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,6 +82,11 @@ namespace WebApiAutores.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AutoresLibros_LibroId",
+                table: "AutoresLibros",
+                column: "LibroId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comentarios_LibroId",
                 table: "Comentarios",
                 column: "LibroId");
@@ -66,10 +96,13 @@ namespace WebApiAutores.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Autores");
+                name: "AutoresLibros");
 
             migrationBuilder.DropTable(
                 name: "Comentarios");
+
+            migrationBuilder.DropTable(
+                name: "Autores");
 
             migrationBuilder.DropTable(
                 name: "Libros");
