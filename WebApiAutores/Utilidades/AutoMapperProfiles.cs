@@ -23,7 +23,7 @@ namespace WebApiAutores.Utilidades
             CreateMap<Comentario, ComentarioDTO>();
         }
 
-        private List<LibroDTO>MapAutorDTOLibros( Autor autor, AutorDTO autorDTO)
+        private List<LibroDTO> MapAutorDTOLibros( Autor autor, AutorDTO autorDTO)
         {
             var resultado = new List<LibroDTO>();
 

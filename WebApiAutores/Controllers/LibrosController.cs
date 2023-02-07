@@ -20,7 +20,7 @@ namespace WebApiAutores.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("{id:int}", Name = "obtenerLibro")]
         public async Task<ActionResult<LibroDTOConAutor>> Get(int id)
         {
             var libro = await context.Libros
@@ -49,6 +49,38 @@ namespace WebApiAutores.Controllers
 
             var libro = mapper.Map<Libro>(libroCreacionDTO);
             
+            AsiganarOrdenAutores(libro);
+
+            context.Add(libro);
+            await context.SaveChangesAsync();
+
+            var libroDTO = mapper.Map<LibroDTO>(libro);
+
+            return CreatedAtRoute("obtenerLibro", new {id = libro.Id}, libroDTO);
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int id, LibroCreacionDTO libroCreacionDTO)
+        {
+            var libroDB = await context.Libros
+                .Include(x => x.AutoresLibros)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (libroDB == null) 
+            {
+                return NotFound();
+            }
+
+            libroDB = mapper.Map(libroCreacionDTO, libroDB);
+
+            AsiganarOrdenAutores(libroDB);
+
+            await context.SaveChangesAsync();
+            return NoContent();
+        }
+
+        private void AsiganarOrdenAutores(Libro libro)
+        {
             if (libro.AutoresLibros != null)
             {
                 for (int i = 0; i < libro.AutoresLibros.Count; i++)
@@ -56,10 +88,8 @@ namespace WebApiAutores.Controllers
                     libro.AutoresLibros[i].Orden = i;
                 }
             }
-
-            context.Add(libro);
-            await context.SaveChangesAsync();
-            return Ok();
         }
+
+
     }
 }
