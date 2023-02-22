@@ -12,7 +12,7 @@ namespace WebApiAutores.Utilidades
                 return;
             }
 
-            if (operation.Parameters == null)
+            else if (operation.Parameters == null)
             {
                 operation.Parameters = new List<OpenApiParameter>();
             }

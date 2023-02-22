@@ -14,7 +14,7 @@ namespace WebApiAutores.Filtros
                 return false;
             }
 
-            var cabecera = context.HttpContext.Request.Headers["incluirHATEOAS"];
+            var cabecera = context.HttpContext.Request.Headers["inlcuirHATEOAS"];
 
             if (cabecera.Count == 0)
             {
